@@ -199,8 +199,8 @@ section{padding:60px 0}.head p{justify-self:start}.model .wrap{padding:60px 0}
 <div id="items"></div><div class="tot"><span>Subtotal</span><span id="total">₦0.00</span></div>
 <label for="cname">Full name</label><input id="cname" autocomplete="name" maxlength="120"><label for="email">Email for receipt</label><input id="email" type="email" autocomplete="email" maxlength="200"><div class="msg" id="msg" hidden aria-live="polite"></div><button class="btn" id="checkout" style="margin-top:14px">Pay now</button><small>Payments are processed by Paystack. We never see your card details.</small></aside>
 <div class="sp" id="status" hidden role="dialog" aria-live="polite"><div class="sbox"><h3 id="sTitle"></h3><p id="sText"></p><p class="refs" id="sRefs"></p><div class="row" id="sBtns"></div></div></div><script>// ===== SETTINGS (public values only) =====
-const SUPABASE_URL="https://YOUR-PROJECT.supabase.co";
-const SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_PUBLIC_KEY"; // the anon/public key. NEVER the service_role key.
+const SUPABASE_URL="https://qomamdxlwwqfklunfaaq.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY="sb_publishable_TiptnBfx27B3jDiiX3_WVQ_9wcdA9PL"; // the anon/public key. NEVER the service_role key.
 const FN=SUPABASE_URL+"/functions/v1/";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
