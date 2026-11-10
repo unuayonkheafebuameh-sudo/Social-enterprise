@@ -1,0 +1,11 @@
+project_id = "payments"
+[functions.checkout]
+verify_jwt = false
+[functions.verify-payment]
+verify_jwt = false
+[functions.paystack-webhook]
+verify_jwt = false
+[functions.reconcile]
+verify_jwt = false
+[functions.admin-api]
+verify_jwt = false
