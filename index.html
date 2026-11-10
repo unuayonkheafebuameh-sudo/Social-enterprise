@@ -254,7 +254,7 @@ $("checkout").onclick=async()=>{
     msg(data.message||"We could not start your payment. Please try again.");
     if(status>=400&&status!==429)idem=crypto.randomUUID(); // a 202 keeps the same key so a retry cannot create a second order
   }catch(e){
-    msg("Network problem. If you reached a payment page, do not pay again. Use Check order status in the footer first.");
+    msg("Network problem: "+e.message+" | calling "+FN+"checkout | from "+location.origin);
   }finally{btn.disabled=false}
 };
 
