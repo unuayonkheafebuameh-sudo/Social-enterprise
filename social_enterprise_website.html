@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A community-centred social enterprise creating practical solutions and stronger communities.">
+<title>Common Ground | Business With Purpose</title>
+<style>
+:root{--ink:#172b29;--muted:#687774;--paper:#f7f7f1;--white:#fff;--green:#176b5b;--green2:#0e5146;--mint:#e2eee8;--orange:#e7a16d;--line:#e4e9e3;--shadow:0 18px 55px rgba(21,48,42,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+img{display:block;width:100%;object-fit:cover}
+.container{width:min(1160px,calc(100% - 44px));margin:auto}
+.topbar{background:var(--green2);color:#e9f3ee;text-align:center;padding:9px 15px;font-size:12px;letter-spacing:.04em}
+header{position:sticky;top:0;z-index:20;background:rgba(247,247,241,.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(228,233,227,.8)}
+.nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.04em;font-size:20px}
+.brand-mark{width:38px;height:38px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:white;font-size:19px}
+.brand small{display:block;font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:-3px}
+.navlinks{display:flex;align-items:center;gap:29px;font-size:13px;font-weight:650;color:#41534f}
+.navlinks a:hover{color:var(--green)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.btn{border:0;border-radius:9px;padding:13px 19px;font-size:13px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:.22s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--green);color:white;box-shadow:0 8px 20px rgba(23,107,91,.18)}
+.btn-primary:hover{background:var(--green2)}
+.btn-outline{border:1px solid #cbd6ce;background:transparent;color:var(--ink)}
+.btn-light{background:white;color:var(--green2)}
+.menu-btn{display:none;border:1px solid var(--line);background:white;border-radius:9px;width:43px;height:43px;font-size:21px}
+.hero{padding:72px 0 76px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 78% 35%,rgba(217,234,222,.9),transparent 37%),linear-gradient(130deg,#f8f8f2 0%,#f0f5ee 58%,#e8f0e9 100%)}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:54px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--green);font-size:11px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px}
+.eyebrow:before{content:"";width:25px;height:2px;background:var(--orange)}
+h1{font-size:clamp(43px,6vw,70px);line-height:1.04;letter-spacing:-.065em;max-width:650px;font-weight:850}
+h1 em{font-style:normal;color:var(--green)}
+.hero-copy{font-size:16px;color:#5d6e68;max-width:510px;margin:24px 0 30px;line-height:1.8}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.hero-note{display:flex;align-items:center;gap:12px;margin-top:36px;color:var(--muted);font-size:12px}
+.avatar-stack{display:flex;padding-left:5px}
+.avatar-stack span{width:29px;height:29px;border-radius:50%;border:2px solid var(--paper);margin-left:-6px;background:linear-gradient(135deg,#d9a17a,#4d7663)}
+.hero-note strong{color:var(--ink)}
+.hero-visual{position:relative;min-height:490px}
+.hero-photo{position:absolute;inset:0 18px 25px 28px;border-radius:190px 190px 18px 18px;overflow:hidden;box-shadow:var(--shadow)}
+.hero-photo img{height:100%;filter:saturate(.82)}
+.photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(13,42,35,.35))}
+.floating-card{position:absolute;z-index:2;background:white;border-radius:15px;padding:17px 19px;box-shadow:var(--shadow)}
+.floating-card.one{left:0;bottom:0;max-width:220px}
+.floating-card.two{right:0;top:65px;display:flex;gap:12px;align-items:center}
+.float-icon{width:39px;height:39px;border-radius:12px;background:#e6f1e9;display:grid;place-items:center;color:var(--green);font-size:20px}
+.floating-card strong{display:block;font-size:21px;letter-spacing:-.04em}
+.floating-card small{color:var(--muted);font-size:10px}
+.section{padding:94px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:38px}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:850;margin-bottom:13px}
+h2{font-size:clamp(30px,4vw,45px);line-height:1.12;letter-spacing:-.05em;max-width:650px}
+.section-head p{max-width:390px;color:var(--muted);font-size:14px}
+.path-section{padding:35px 0 78px}
+.path-wrap{background:var(--green2);color:white;border-radius:20px;padding:37px 40px}
+.path-top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:25px}
+.path-top h2{font-size:25px;letter-spacing:-.04em}
+.path-top p{color:#b8cec4;font-size:12px}
+.path-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.path-card{border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:20px;background:rgba(255,255,255,.055);transition:.2s}
+.path-card:hover{background:rgba(255,255,255,.13);transform:translateY(-3px)}
+.path-card span{font-size:23px}
+.path-card strong{display:block;margin:13px 0 4px;font-size:14px}
+.path-card small{color:#c2d5cc;font-size:11px}
+.offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.offer-card{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;transition:.25s}
+.offer-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.offer-image{height:220px;position:relative}
+.offer-image img{height:100%}
+.tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.93);padding:6px 10px;border-radius:30px;font-size:10px;font-weight:800;color:var(--green)}
+.offer-body{padding:23px}
+.offer-body h3{font-size:19px;letter-spacing:-.03em;margin-bottom:7px}
+.offer-body p{color:var(--muted);font-size:12px;min-height:59px}
+.offer-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.offer-foot strong{font-size:12px;color:var(--green)}
+.text-link{font-size:12px;font-weight:800;color:var(--green)}
+.model{background:#eaf1eb}
+.model-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:65px;align-items:center}
+.model-copy p{color:var(--muted);font-size:14px;margin:18px 0 25px;max-width:420px}
+.steps{display:grid;gap:12px}
+.step{background:white;border:1px solid #e1e9e1;border-radius:13px;padding:18px;display:flex;align-items:center;gap:17px}
+.step-num{width:42px;height:42px;border-radius:12px;background:var(--mint);display:grid;place-items:center;color:var(--green);font-weight:850}
+.step strong{display:block;font-size:14px}
+.step small{font-size:11px;color:var(--muted)}
+.step-arrow{margin-left:auto;color:var(--green);font-size:19px}
+.impact{background:#fff}
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.impact-photo{height:440px;border-radius:16px;overflow:hidden;position:relative}
+.impact-photo img{height:100%}
+.impact-label{position:absolute;bottom:18px;left:18px;background:white;padding:13px 17px;border-radius:10px;font-size:11px;font-weight:750}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:27px 0}
+.stat{padding:19px;background:var(--paper);border-radius:12px}
+.stat strong{font-size:29px;letter-spacing:-.05em;color:var(--green);display:block}
+.stat span{font-size:11px;color:var(--muted)}
+.impact-disclaimer{font-size:10px;color:#89948f}
+.story-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.story-main{height:365px;border-radius:16px;overflow:hidden;position:relative;color:white}
+.story-main img{height:100%}
+.story-main:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,36,30,.82),transparent 70%)}
+.story-caption{position:absolute;z-index:1;bottom:25px;left:26px;right:25px}
+.story-caption small{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#dcebe2}
+.story-caption h3{font-size:25px;line-height:1.2;max-width:470px;margin-top:8px}
+.story-side{display:grid;gap:15px}
+.mini-story{background:white;border:1px solid var(--line);border-radius:14px;padding:22px}
+.mini-story small{color:var(--green);font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.12em}
+.mini-story h3{font-size:17px;line-height:1.3;margin:9px 0}
+.mini-story p{font-size:12px;color:var(--muted)}
+.partnership{background:var(--green2);color:white;padding:70px 0}
+.partner-grid{display:flex;justify-content:space-between;align-items:center;gap:40px}
+.partner-grid p{color:#c1d4cb;max-width:510px;font-size:14px;margin-top:14px}
+.partner-actions{display:flex;gap:10px;flex-wrap:wrap}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.about-grid p{font-size:14px;color:var(--muted);margin:17px 0}
+.values{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:25px}
+.value{padding:15px;background:white;border:1px solid var(--line);border-radius:10px;font-size:12px;font-weight:750}
+.value span{color:var(--green);margin-right:7px}
+.about-photo{height:410px;border-radius:16px;overflow:hidden}
+.about-photo img{height:100%}
+.cta{padding:65px 0;background:#e8f0e8}
+.cta-box{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.cta-box p{color:var(--muted);font-size:13px;margin-top:8px}
+footer{background:#122e29;color:#eaf2ed;padding:58px 0 25px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:35px;padding-bottom:40px}
+.footer-brand p{font-size:12px;color:#adc1b7;max-width:260px;margin-top:17px}
+footer h4{font-size:12px;margin-bottom:15px}
+footer a,footer li{display:block;font-size:11px;color:#b6c9c0;margin:9px 0}
+footer a:hover{color:white}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.15);padding-top:20px;display:flex;justify-content:space-between;color:#9db4a9;font-size:10px}
+.modal{display:none;position:fixed;inset:0;background:rgba(9,28,24,.68);z-index:50;padding:20px;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-box{background:white;width:min(460px,100%);border-radius:18px;padding:28px;position:relative;max-height:90vh;overflow:auto}
+.modal-close{position:absolute;right:18px;top:14px;border:0;background:#eef2ed;border-radius:50%;width:34px;height:34px;font-size:19px}
+.modal-box h2{font-size:27px;margin:8px 0}
+.modal-box>p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.field{margin:13px 0}
+.field label{display:block;font-size:11px;font-weight:750;margin-bottom:6px}
+.field input,.field select{width:100%;padding:13px;border:1px solid #dce4dc;border-radius:9px;font:inherit;font-size:13px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--green)}
+.amounts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.amount{padding:11px;border:1px solid var(--line);border-radius:8px;background:white;font-size:12px;font-weight:750}
+.amount.active{background:var(--mint);border-color:var(--green);color:var(--green)}
+.notice{background:#fff4e8;color:#80542f;padding:12px;border-radius:9px;font-size:11px;margin-top:13px}
+.success{display:none;background:#e7f4eb;padding:14px;border-radius:9px;color:#175b3e;font-size:12px;margin-top:14px}
+@media(max-width:850px){.navlinks{gap:15px}.navlinks a{font-size:11px}.hero-grid{gap:25px}.hero-visual{min-height:410px}.path-grid{grid-template-columns:1fr 1fr}.model-grid,.impact-grid,.about-grid{gap:30px}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.container{width:min(100% - 32px,560px)}.topbar{font-size:10px}.nav{height:70px}.menu-btn{display:block}.nav-actions .btn{display:none}.navlinks{display:none;position:absolute;top:70px;left:0;right:0;background:var(--paper);padding:18px 22px 23px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.navlinks.open{display:flex}.navlinks a{padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.hero{padding:53px 0 55px}.hero-grid{grid-template-columns:1fr}.hero-copy{font-size:14px}.hero-visual{min-height:380px;margin-top:8px}.hero-photo{inset:0 14px 22px 20px}.floating-card.one{left:0}.floating-card.two{right:0;top:40px}.section{padding:68px 0}.section-head{display:block}.section-head p{margin-top:14px}.path-section{padding:10px 0 60px}.path-wrap{padding:25px 18px}.path-top{display:block}.path-top p{margin-top:7px}.path-grid{gap:8px}.path-card{padding:14px}.path-card strong{font-size:12px}.path-card small{font-size:10px}.offer-grid{grid-template-columns:1fr}.offer-image{height:230px}.model-grid,.impact-grid,.about-grid{grid-template-columns:1fr}.model-grid{gap:28px}.impact-photo{height:320px;order:2}.story-grid{grid-template-columns:1fr}.story-main{height:300px}.partner-grid,.cta-box{display:block}.partner-actions{margin-top:22px}.about-photo{height:310px}.footer-grid{grid-template-columns:1fr 1fr;gap:25px}.footer-brand{grid-column:1/-1}.footer-bottom{display:block;line-height:2}.footer-bottom span{display:block}.cta-box .btn{margin-top:20px}}
+</style>
+</head>
+<body>
+<div class="topbar">PURPOSE IN ACTION · BUILDING OPPORTUNITY, TOGETHER</div>
+<header>
+ <div class="container nav">
+  <a class="brand" href="#home"><span class="brand-mark">✳</span><span>common ground<small>business with purpose</small></span></a>
+  <nav class="navlinks" id="navlinks">
+   <a href="#home">Home</a><a href="#offer">What we do</a><a href="#impact">Community impact</a><a href="#about">About</a><a href="#partners">Partnerships</a>
+  </nav>
+  <div class="nav-actions"><button class="btn btn-primary" onclick="openModal('donate')">Support our mission ↗</button><button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button></div>
+ </div>
+</header>
+<main>
+<section class="hero" id="home">
+ <div class="container hero-grid">
+  <div>
+   <div class="eyebrow">A different way forward</div>
+   <h1>Good business.<br><em>Stronger communities.</em></h1>
+   <p class="hero-copy">We create practical products, services and opportunities that help people move forward. Every connection is a chance to build a more resilient community.</p>
+   <div class="hero-buttons"><a class="btn btn-primary" href="#offer">Explore what we do ↗</a><a class="btn btn-outline" href="#impact">Discover our impact</a></div>
+   <div class="hero-note"><div class="avatar-stack"><span></span><span></span><span></span></div><span><strong>People at the centre.</strong> Progress with purpose.</span></div>
+  </div>
+  <div class="hero-visual">
+   <div class="hero-photo"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85" alt="Community members spending time together"><div class="photo-overlay"></div></div>
+   <div class="floating-card one"><strong>One shared purpose.</strong><small>Creating value that reaches beyond business.</small></div>
+   <div class="floating-card two"><div class="float-icon">✳</div><div><strong>People first</strong><small>Impact through action</small></div></div>
+  </div>
+ </div>
+</section>
+<section class="path-section">
+ <div class="container"><div class="path-wrap">
+  <div class="path-top"><h2>What brings you here?</h2><p>Find the path that fits what you need.</p></div>
+  <div class="path-grid">
+   <a class="path-card" href="#offer"><span>↗</span><strong>I want to buy</strong><small>Explore our products and services</small></a>
+   <a class="path-card" href="#programmes"><span>♡</span><strong>I need support</strong><small>Discover programmes and opportunities</small></a>
+   <a class="path-card" href="#partners"><span>⌘</span><strong>I want to partner</strong><small>Build something meaningful together</small></a>
+   <a class="path-card" href="#take-action"><span>＋</span><strong>I want to get involved</strong><small>Volunteer, contribute or connect</small></a>
+  </div>
+ </div></div>
+</section>
+<section class="section" id="offer">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker">Our commercial work</div><h2>Practical solutions.<br>Real value.</h2></div><p>Explore a sample of the ways we serve customers and create opportunities. Replace these examples with the organisation's confirmed offers.</p></div>
+  <div class="offer-grid">
+   <article class="offer-card"><div class="offer-image"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80" alt="Bright shared workspace"><span class="tag">Business services</span></div><div class="offer-body"><h3>Business support</h3><p>Practical support that helps small organisations strengthen their operations and grow with confidence.</p><div class="offer-foot"><strong>Enquire for details</strong><a class="text-link" href="#take-action">Explore ↗</a></div></div></article>
+   <article class="offer-card"><div class="offer-image"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80" alt="People collaborating around a table"><span class="tag">Learning & skills</span></div><div class="offer-body"><h3>Skills development</h3><p>Learning experiences designed to build practical knowledge, confidence and pathways to opportunity.</p><div class="offer-foot"><strong>Ask about programmes</strong><a class="text-link" href="#programmes">Explore ↗</a></div></div></article>
+   <article class="offer-card"><div class="offer-image"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=900&q=80" alt="Hands holding a young plant"><span class="tag">Community solutions</span></div><div class="offer-body"><h3>Community projects</h3><p>Collaborative initiatives responding to local priorities and creating practical, lasting value.</p><div class="offer-foot"><strong>Let's collaborate</strong><a class="text-link" href="#partners">Explore ↗</a></div></div></article>
+  </div>
+ </div>
+</section>
+<section class="section model">
+ <div class="container model-grid">
+  <div class="model-copy"><div class="kicker">The model</div><h2>When business moves forward, communities move forward.</h2><p>Our social-enterprise approach connects the value created through business activity with opportunities for people and communities. The exact reinvestment model and outcomes should be explained transparently.</p><a class="btn btn-primary" href="#impact">See how impact works ↗</a></div>
+  <div class="steps">
+   <div class="step"><div class="step-num">01</div><div><strong>People access products and services</strong><small>Customers, partners and participants engage with our work.</small></div><span class="step-arrow">↘</span></div>
+   <div class="step"><div class="step-num">02</div><div><strong>Value creates opportunities</strong><small>Revenue, skills, relationships and resources support the model.</small></div><span class="step-arrow">↘</span></div>
+   <div class="step"><div class="step-num">03</div><div><strong>Community outcomes grow</strong><small>Programmes and partnerships work toward measurable progress.</small></div><span class="step-arrow">✳</span></div>
+  </div>
+ </div>
+</section>
+<section class="section impact" id="impact">
+ <div class="container impact-grid">
+  <div class="impact-photo"><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85" alt="People gathered at a community event"><div class="impact-label">Community is built together.</div></div>
+  <div><div class="kicker">Community impact</div><h2>Progress should be visible, measurable and honest.</h2><p style="color:var(--muted);font-size:14px;margin-top:17px">We believe in showing what has happened, what is changing and where more work is needed. Our impact reporting will share verified activity, outcomes and lessons.</p>
+   <div class="stats"><div class="stat"><strong>—</strong><span>People reached</span></div><div class="stat"><strong>—</strong><span>Programmes delivered</span></div><div class="stat"><strong>—</strong><span>Community partners</span></div><div class="stat"><strong>—</strong><span>Opportunities created</span></div></div>
+   <p class="impact-disclaimer">Impact figures have intentionally been left blank until verified organisational data is supplied.</p>
+   <div style="margin-top:22px"><a class="btn btn-outline" href="#programmes">Explore community work ↗</a></div>
+  </div>
+ </div>
+</section>
+<section class="section" id="programmes">
+ <div class="container"><div class="section-head"><div><div class="kicker">Stories & learning</div><h2>Change is made of real people and real experiences.</h2></div><p>Share consented stories that explain the context, the work undertaken and what changed over time.</p></div>
+  <div class="story-grid">
+   <article class="story-main"><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1100&q=85" alt="Volunteers working together"><div class="story-caption"><small>Community story · Sample layout</small><h3>Small actions can open the door to bigger possibilities.</h3></div></article>
+   <div class="story-side"><article class="mini-story"><small>Our programmes</small><h3>Skills, access and opportunity</h3><p>Introduce current programmes, who they serve, eligibility, dates, location and how to participate.</p></article><article class="mini-story"><small>Our learning</small><h3>Honest progress, shared openly</h3><p>Publish outcomes, challenges and lessons so supporters can understand the work behind the numbers.</p></article></div>
+  </div>
+ </div>
+</section>
+<section class="partnership" id="partners"><div class="container partner-grid"><div><div class="kicker" style="color:#b9d8c8">Work with us</div><h2>Better outcomes happen when we work together.</h2><p>We welcome conversations with businesses, schools, public organisations, funders and community groups who share an interest in practical progress.</p></div><div class="partner-actions"><a class="btn btn-light" href="#take-action">Become a partner ↗</a><a class="btn" style="border:1px solid #78958a;color:white" href="mailto:hello@example.com">Start a conversation</a></div></div></section>
+<section class="section" id="about"><div class="container about-grid"><div><div class="kicker">Who we are</div><h2>A business built around a bigger purpose.</h2><p>Common Ground is a demonstration brand for this website concept. This section should tell the organisation's real founding story, mission, location, leadership and the communities it works alongside.</p><p>We believe commercial sustainability and community benefit can reinforce one another when the model is clear, accountable and rooted in real needs.</p><div class="values"><div class="value"><span>✳</span>Integrity & transparency</div><div class="value"><span>✳</span>People-centred action</div><div class="value"><span>✳</span>Shared opportunity</div><div class="value"><span>✳</span>Continuous learning</div></div></div><div class="about-photo"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=85" alt="Team members working together"></div></div></section>
+<section class="cta" id="take-action"><div class="container cta-box"><div><div class="kicker">Take the next step</div><h2>Be part of something that moves us forward.</h2><p>Purchase, partner, volunteer or support a community initiative.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="mailto:hello@example.com">Contact the team ↗</a><button class="btn btn-outline" onclick="openModal('donate')">Make a contribution ♡</button></div></div></section>
+</main>
+<footer><div class="container"><div class="footer-grid">
+ <div class="footer-brand"><a class="brand" href="#home" style="color:white"><span class="brand-mark">✳</span><span>common ground<small style="color:#a9c1b5">business with purpose</small></span></a><p>A community-centred enterprise creating practical solutions and stronger communities. Replace this text with the organisation's approved description.</p></div>
+ <div><h4>Explore</h4><a href="#offer">What we do</a><a href="#impact">Community impact</a><a href="#about">About us</a><a href="#partners">Partnerships</a></div>
+ <div><h4>Get involved</h4><a href="#programmes">Our programmes</a><a href="#take-action">Volunteer</a><a href="#" onclick="openModal('donate');return false">Make a contribution</a><a href="mailto:hello@example.com">Contact us</a></div>
+ <div><h4>Contact</h4><a href="mailto:hello@example.com">hello@example.com</a><a href="#">Organisation location</a><a href="#">Instagram · Facebook · LinkedIn</a></div>
+ </div><div class="footer-bottom"><span>© 2026 Common Ground. Demonstration website concept.</span><span>Privacy · Terms · Accessibility</span></div></div></footer>
+<div class="modal" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-box"><button class="modal-close" onclick="closeModal()" aria-label="Close">×</button><div class="kicker" id="modalKicker">Support our mission</div><h2 id="modalTitle">Make a contribution</h2><p id="modalDesc">Choose an amount and enter your details. This is a checkout preview, not a live payment.</p>
+  <div class="amounts"><button class="amount active" onclick="setAmount(5000,this)">₦5,000</button><button class="amount" onclick="setAmount(10000,this)">₦10,000</button><button class="amount" onclick="setAmount(20000,this)">₦20,000</button></div>
+  <div class="field"><label for="customAmount">Other amount (₦)</label><input id="customAmount" type="number" min="100" placeholder="Enter amount" oninput="amount=this.value"></div>
+  <div class="field"><label for="fullName">Full name</label><input id="fullName" placeholder="Your name"></div>
+  <div class="field"><label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com"></div>
+  <button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="demoPayment()">Continue to payment →</button>
+  <div class="notice">Demo only: no money will be collected. A live version requires the organisation's verified payment account and secure server-side payment verification.</div><div class="success" id="successMsg">Preview interaction complete. Connect a payment gateway to accept real payments.</div>
+ </div>
+</div>
+<script>
+const menuBtn=document.getElementById('menuBtn'),navlinks=document.getElementById('navlinks');
+menuBtn.addEventListener('click',()=>{navlinks.classList.toggle('open');menuBtn.textContent=navlinks.classList.contains('open')?'×':'☰'});
+navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navlinks.classList.remove('open');menuBtn.textContent='☰'}));
+let amount=5000;
+function openModal(type){const modal=document.getElementById('paymentModal');document.getElementById('modalTitle').textContent=type==='donate'?'Make a contribution':'Complete your payment';document.getElementById('modalKicker').textContent=type==='donate'?'Support our mission':'Secure checkout';document.getElementById('successMsg').style.display='none';modal.classList.add('show');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('paymentModal').classList.remove('show');document.body.style.overflow=''}
+function setAmount(value,button){amount=value;document.getElementById('customAmount').value='';document.querySelectorAll('.amount').forEach(b=>b.classList.remove('active'));button.classList.add('active')}
+function demoPayment(){const name=document.getElementById('fullName').value.trim(),email=document.getElementById('email').value.trim(),custom=document.getElementById('customAmount').value;if(custom)amount=Number(custom);if(!name||!email||!email.includes('@')||!amount||amount<100){alert('Please enter your name, a valid email and an amount of at least ₦100.');return}document.getElementById('successMsg').style.display='block'}
+document.getElementById('paymentModal').addEventListener('click',e=>{if(e.target.id==='paymentModal')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
