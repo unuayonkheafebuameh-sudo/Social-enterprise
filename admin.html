@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Payments admin</title>
+<style>
+body{font:14px/1.5 system-ui,sans-serif;margin:0;background:#f4f6fb;color:#0f1737}
+header{background:#1c2a6b;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+main{padding:16px 20px;max-width:1200px;margin:auto}
+input,select,button{font:inherit;padding:8px 10px;border:1px solid #9aa4c7;border-radius:6px;background:#fff}
+button{cursor:pointer;background:#1c2a6b;color:#fff;border-color:#1c2a6b}button.alt{background:#fff;color:#1c2a6b}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
+table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:8px;border-bottom:1px solid #e0e4f0;text-align:left;vertical-align:top}
+tr.r{cursor:pointer}tr.r:hover{background:#eef1fb}
+.tag{padding:2px 8px;border-radius:10px;background:#e0e4f0;font-size:12px}.review{background:#c2305a;color:#fff}.success{background:#1f7a4d;color:#fff}
+.panel{background:#fff;border:1px solid #c9d0e8;padding:16px;margin-top:14px}
+.box{max-width:340px;margin:80px auto;background:#fff;padding:24px;border:1px solid #c9d0e8}.box input{width:100%;margin:6px 0 12px;box-sizing:border-box}
+.scroll{overflow-x:auto}small,.mut{color:#5d6788}pre{white-space:pre-wrap;word-break:break-all;margin:0;font-size:12px}
+</style></head><body>
+<div id="login" class="box"><h2>Admin sign in</h2><label>Email<input id="em" type="email" autocomplete="username"></label><label>Password<input id="pw" type="password" autocomplete="current-password"></label><button id="go">Sign in</button><p id="lerr" class="mut"></p></div>
+<div id="app" hidden><header><b>Payments admin</b><button class="alt" id="out">Sign out</button></header><main>
+<div class="bar"><input id="s" placeholder="Order no, reference or email"><select id="st"><option value="">All statuses</option><option>pending</option><option>processing</option><option>success</option><option>failed</option><option>abandoned</option><option>reversed</option><option>refunded</option><option>partially_refunded</option></select>
+<label><input type="checkbox" id="rv"> Needs review</label><label><input type="checkbox" id="sl"> Pending over 1 hour</label>
+<button id="find">Search</button><button class="alt" id="rec">Run reconciliation</button><button class="alt" id="wf">Webhook failures</button></div>
+<p id="note" class="mut"></p><div class="scroll"><table><thead><tr><th>Date</th><th>Order</th><th>Customer</th><th>Amount</th><th>Status</th><th>Reference</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div id="detail" class="panel" hidden></div></main></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL="https://qomamdxlwwqfklunfaaq.supabase.co",SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_PUBLIC_KEY"; // public anon key only
+if(SUPABASE_URL.includes("YOUR-PROJECT")||SUPABASE_ANON_KEY.includes("YOUR_")){document.addEventListener("DOMContentLoaded",()=>{$("lerr").textContent="Settings missing: put your Supabase URL and public key at the top of this file."})}
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=i=>document.getElementById(i);
+const money=(k,c)=>(c||"NGN")+" "+(k/100).toLocaleString("en-NG",{minimumFractionDigits:2});
+function el(t,txt,cls){const e=document.createElement(t);if(txt!=null)e.textContent=txt;if(cls)e.className=cls;return e}
+async function api(action,body){
+  const {data}=await sb.auth.getSession();
+  const r=await fetch(SUPABASE_URL+"/functions/v1/admin-api",{method:"POST",headers:{"Content-Type":"application/json",apikey:SUPABASE_ANON_KEY,Authorization:"Bearer "+(data.session&&data.session.access_token)},body:JSON.stringify(Object.assign({action:action},body||{}))});
+  let d={};try{d=await r.json()}catch(e){}
+  if(r.status===403){show(false);$("lerr").textContent="This account is not an administrator."}
+  return d;
+}
+function show(on){$("login").hidden=on;$("app").hidden=!on}
+$("go").onclick=async()=>{
+  const {error}=await sb.auth.signInWithPassword({email:$("em").value,password:$("pw").value});
+  if(error){$("lerr").textContent="Sign in failed: "+error.message;return}
+  show(true);load();
+};
+$("out").onclick=async()=>{await sb.auth.signOut();show(false)};
+async function load(){
+  $("note").textContent="Loading...";
+  const d=await api("list",{search:$("s").value,status:$("st").value,review:$("rv").checked,stale:$("sl").checked});
+  const tb=$("rows");tb.innerHTML="";
+  (d.payments||[]).forEach(p=>{
+    const tr=el("tr",null,"r"),o=p.orders||{};
+    tr.append(el("td",new Date(p.created_at).toLocaleString()),el("td",o.order_number),el("td",(o.customer_name||"")+" "+(o.customer_email||"")),el("td",money(p.amount,p.currency)));
+    const td=el("td");td.append(el("span",p.payment_status,"tag "+(p.payment_status==="success"?"success":"")));
+    if(p.needs_review)td.append(" ",el("span","review: "+p.review_reason,"tag review"));tr.append(td,el("td",p.transaction_reference));
+    tr.onclick=()=>detail(p.transaction_reference);tb.append(tr);
+  });
+  $("note").textContent=(d.payments||[]).length+" payment attempts shown";
+}
+$("find").onclick=load;
+$("rec").onclick=async()=>{$("note").textContent="Reconciling with Paystack...";const r=await api("reconcile_all");$("note").textContent="Checked "+r.checked+", updated "+r.updated+", flagged "+r.flagged+", could not verify "+r.unverified;load()};
+$("wf").onclick=async()=>{
+  const d=await api("webhook_failures"),p=$("detail");p.hidden=false;p.innerHTML="";p.append(el("h3","Failed webhook events"));
+  (d.events||[]).forEach(e=>p.append(el("pre",new Date(e.received_at).toLocaleString()+"  "+e.event_type+"  "+(e.transaction_reference||"")+"  "+(e.error||""))));
+  if(!(d.events||[]).length)p.append(el("p","None.","mut"));
+};
+function receiptWin(r){
+  const w=window.open("","_blank");if(!w)return;
+  const d=w.document;d.title=r.receipt_number;const b=r.business||{};
+  const add=(t,x)=>{const e=d.createElement(t);e.textContent=x;d.body.append(e)};
+  add("h1",b.name||"");add("p",[b.email,b.phone,b.address].join(" | "));add("h2","Receipt "+r.receipt_number);
+  add("p","Order "+r.order_number+" | Ref "+r.transaction_reference+" | "+new Date(r.paid_at).toLocaleString()+" | "+r.customer_name+" ("+r.customer_email+") | "+(r.payment_channel||"n/a")+" | "+r.status);
+  (r.items||[]).forEach(i=>add("p",i.name+" x"+i.quantity+" @ "+money(i.unit_price,r.currency)+" = "+money(i.line_total,r.currency)));
+  add("p","Subtotal "+money(r.subtotal,r.currency)+" | Discount "+money(r.discount,r.currency)+" | TOTAL "+money(r.total,r.currency));add("p","Verification reference "+r.verification_ref);w.print();
+}
+async function detail(ref){
+  const d=await api("detail",{reference:ref}),p=$("detail");p.hidden=false;p.innerHTML="";
+  if(!d.payment){p.append(el("p","Not found."));return}
+  const pay=d.payment,o=pay.orders||{};
+  p.append(el("h3",o.order_number+" ("+pay.payment_status+")"));
+  p.append(el("p",["Reference: "+pay.transaction_reference,"Paystack ID: "+(pay.paystack_transaction_id||"-"),"Amount: "+money(pay.amount,pay.currency),"Channel: "+(pay.payment_channel||"-"),"Verified: "+(pay.verified_at||"not verified"),"Order status: "+o.order_status,"Review: "+(pay.needs_review?pay.review_reason:"no")].join("  |  ")));
+  const bar=el("div",null,"bar");
+  const vb=el("button","Verify with Paystack");vb.onclick=async()=>{vb.disabled=true;const r=await api("verify",{reference:ref});alert("Result: "+(r.state||r.error));detail(ref);load()};bar.append(vb);
+  if(["success","partially_refunded"].includes(pay.payment_status)){const rb=el("button","Refund","alt");rb.onclick=async()=>{
+    const a=prompt("Refund amount in naira (leave empty for the full remaining amount)");if(a===null)return;const reason=prompt("Reason for the refund")||"";
+    const r=await api("refund",{reference:ref,amount:a?Math.round(Number(a)*100):undefined,reason:reason});alert(r.message||r.status||r.error);detail(ref)};bar.append(rb)}
+  if(d.receipt){const pb=el("button","Print receipt","alt");pb.onclick=()=>receiptWin(d.receipt.receipt_data);bar.append(pb);
+    const eb=el("button","Email: "+d.receipt.email_delivery_status+" (retry)","alt");eb.onclick=async()=>{const r=await api("resend_receipt",{receipt_id:d.receipt.id});alert(r.status);detail(ref)};bar.append(eb)}
+  p.append(bar);
+  p.append(el("h4","Refunds"));(d.refunds||[]).forEach(r=>p.append(el("pre",r.created_at+"  "+money(r.amount)+"  "+r.status+"  "+(r.reason||""))));
+  p.append(el("h4","Audit history"));(d.audit_logs||[]).forEach(a=>p.append(el("pre",a.created_at+"  "+a.actor_type+"  "+a.action+"  "+(a.previous_status||"")+" -> "+(a.new_status||"")+"  "+(a.details?JSON.stringify(a.details):""))));
+  p.append(el("h4","Webhook events"));(d.webhooks||[]).forEach(w=>p.append(el("pre",w.received_at+"  "+w.event_type+"  "+w.processing_status+"  "+(w.error||""))));
+  p.scrollIntoView();
+}
+sb.auth.getSession().then(({data})=>{if(data.session){show(true);load()}});
+</script></body></html>
